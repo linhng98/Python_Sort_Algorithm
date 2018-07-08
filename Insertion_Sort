@@ -1,0 +1,24 @@
+import time
+
+
+def insertion_sort(Array):
+    for i in range(1, len(Array)):
+        temp_var = Array[i]
+        j = i - 1
+        while j >= 0 and Array[j] > temp_var:
+            Array[j + 1] = Array[j]
+            j = j - 1
+        Array[j + 1] = temp_var
+
+
+def main():
+    Array = [48, 16, 70, 66, 57, 71, 77, 6, 64, 74, 73, 90, 83, 56, 97]
+    start = time.time()
+    insertion_sort(Array)
+    end = time.time()
+    print(Array)
+    print(end - start)
+
+
+if __name__ == '__main__':
+    main()
