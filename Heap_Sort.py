@@ -12,12 +12,13 @@ def heapify(Array, start_index, end_index):
         largest_index = right
     if largest_index != start_index:
         Array[largest_index], Array[start_index] = Array[start_index], Array[largest_index]
-        heapify(Array, largest_index, end_index)
+        if largest_index <= int((end_index - 1) / 2):
+            heapify(Array, largest_index, end_index)
 
 
 def heap_sort(Array):
     end_index = len(Array) - 1
-    for i in range(end_index, -1, -1):
+    for i in range(int((end_index - 1) / 2), -1, -1):
         heapify(Array, i, end_index)
 
     for i in range(end_index, 0, -1):
@@ -26,7 +27,9 @@ def heap_sort(Array):
 
 
 def main():
-    Array = [48, 16, 70, 66, 57, 71, 77, 6, 64, 74, 73, 90, 83, 56, 97]
+    Array = []
+    for i in range(1000, 0, -1):
+        Array.append(i)
     start = time.time()
     heap_sort(Array)
     end = time.time()
@@ -36,3 +39,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
