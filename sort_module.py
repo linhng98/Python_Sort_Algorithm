@@ -3,7 +3,7 @@ import time
 
 class SortAlgorithm:
 
-    # selection sort------------------------------------------------------------
+    # selection sort-----------------------------------------------------------
     @staticmethod
     def selection_sort(array):
 
@@ -16,7 +16,7 @@ class SortAlgorithm:
 
             array[min_index], array[i] = array[i], array[min_index]
 
-    # bubble sort --------------------------------------------------------------
+    # bubble sort -------------------------------------------------------------
     @staticmethod
     def bubble_sort(array):
 
@@ -31,7 +31,7 @@ class SortAlgorithm:
             if swapped is False:
                 break
 
-    # insertion sort------------------------------------------------------------
+    # insertion sort-----------------------------------------------------------
     @staticmethod
     def insertion_sort(array):
 
@@ -45,7 +45,7 @@ class SortAlgorithm:
 
             array[j + 1] = key
 
-    # heap sort-----------------------------------------------------------------
+    # heap sort----------------------------------------------------------------
     def heapify(self, array, start, end):
         if start < 0 or end > len(array) - 1:
             return
@@ -72,7 +72,7 @@ class SortAlgorithm:
             array[i], array[0] = array[0], array[i]
             self.heapify(array, 0, i - 1)
 
-    # quick sort----------------------------------------------------------------
+    # quick sort---------------------------------------------------------------
     @staticmethod
     def partition(array, start, end):
         i = start - 1
@@ -92,7 +92,7 @@ class SortAlgorithm:
             self.quick_sort(array, start, pi - 1)
             self.quick_sort(array, pi + 1, end)
 
-    # merge sort----------------------------------------------------------------
+    # merge sort---------------------------------------------------------------
     @staticmethod
     def merge(array, left, mid, right):
         amount_arr_left = mid - left + 1
@@ -137,7 +137,7 @@ class SortAlgorithm:
             self.merge_sort(array, mid + 1, right)
             self.merge(array, left, mid, right)
 
-    # counting sort-------------------------------------------------------------
+    # counting sort------------------------------------------------------------
     @staticmethod
     def counting_sort(array):
         max_value = max(array)
@@ -154,14 +154,44 @@ class SortAlgorithm:
                 counting_arr[j] -= 1
                 k += 1
 
-        return result
+        for i in range(len(result)):
+            array[i] = result[i]
+
+    # radix sort---------------------------------------------------------------
+    @staticmethod
+    def count_sort_radix(array, exp):
+        result = [0] * len(array)
+        count = [0] * 10
+
+        for i in range(len(array)):
+            index = int((array[i] / exp)) % 10
+            count[index] += 1
+
+        for i in range(1, len(count)):
+            count[i] += count[i - 1]
+
+        for i in range(len(array) - 1, -1, -1):
+            index = int((array[i] / exp)) % 10
+            result[count[index] - 1] = array[i]
+            count[index] -= 1
+
+        for i in range(len(array)):
+            array[i] = result[i]
+
+    def radix_sort(self, array):
+        max_number = max(array)
+        exp = 1
+        while max_number / exp > 0:
+            self.count_sort_radix(array, exp)
+            exp *= 10
 
 
+"""
 def main():
     sort = SortAlgorithm()
     array_demo = [48, 16, 70, 66, 57, 71, 77, 6, 64, 74, 73, 90, 83, 56, 97, 4]
     begin_time = time.time()
-    array_demo = sort.counting_sort(array_demo)
+    sort.counting_sort(array_demo)
     finish_time = time.time()
     print(finish_time - begin_time)
     print(array_demo)
@@ -169,3 +199,14 @@ def main():
 
 if __name__ == '__main__':
     main()
+"""
+
+sort_algorithm = SortAlgorithm()
+selection = sort_algorithm.selection_sort
+bubble = sort_algorithm.bubble_sort
+insertion = sort_algorithm.insertion_sort
+heap = sort_algorithm.heap_sort
+quick = sort_algorithm.quick_sort
+merge = sort_algorithm.merge_sort
+counting = sort_algorithm.counting_sort
+radix = sort_algorithm.radix_sort
